@@ -1,0 +1,87 @@
+﻿@model List<Users>
+
+@{
+    ViewData["Title"] = "База читателей";
+}
+
+<style>
+    .table-auto {
+        max-width: 750px;
+        overflow-y: scroll;
+        max-height: 530px;
+        margin-left: -30px;
+    }
+</style>
+
+<div class="grid grid-cols-2 h-screen">
+    <div class="p-8 bg-500">
+
+        <div class="table-auto">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Имя</th>
+                        <th class="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Адрес</th>
+                        <th class="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Способ связи</th>
+                        <th class="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        <th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">@user.Name</td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">@user.Address</td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">@user.Email</td>
+                            <td>
+                                <form method="post" asp-controller="Users" asp-action="Delete_User">
+                                    <input type="hidden" name="Id" value=@user.Id>
+                                    <button class=" ml-[70px] bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+<div class="bg-500">
+<div class="mx-auto max-w-md float-right w-[500px] mr-[100px] mt-[70px]">
+    <h2 class="text-center text-2xl font-bold mb-4 text-gray-800">Оформление читателя</h2>
+
+    <form method="post" asp-controller="Users" asp-action="Add_User" class="bg-black shadow-md rounded px-8 pt-6 pb-8 mb-4 text-white">
+    <div class="mb-4">
+        <label class="block text-sm font-bold mb-2">
+            Имя
+        </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="Name" required>
+          
+    </div>
+    <div class="mb-4">
+            <label class="block text-sm font-bold mb-2">
+            Адрес
+        </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="Address" required>
+    </div>
+    <div class="mb-4">
+        <label class="block text-sm font-bold mb-2">
+            Способ связи
+        </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="Email" required>
+    </div>
+    <div class="flex items-center justify-between">
+            <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            Отправить
+        </button>
+        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="reset">
+            Сбросить
+        </button>
+    </div>
+</form>
+</div>
+</div>
+</div>

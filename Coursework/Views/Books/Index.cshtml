@@ -1,0 +1,95 @@
+﻿@model List<Books>
+
+@{
+    ViewData["Title"] = "База книг";
+}
+
+<style>
+    .rounded-md {
+        border-radius: 5px;
+    }
+
+    .bg-black {
+        background-color: black;
+    }
+
+    .overflow-auto {
+        overflow: auto;
+    }
+
+    .table-auto{
+        max-width: 600px;
+        overflow-y: scroll;
+        max-height: 530px;
+    }
+</style>
+
+<div class="grid grid-cols-2 h-screen">
+    <div class="p-8 bg-500">
+
+        <div class="table-auto">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Название книги</th>
+                        <th class="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Автор</th>
+                        <th class="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"><th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+
+                    @foreach (var book in Model)
+                    {
+                        <tr>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">@book.Title</td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">@book.Author</td>
+                            <td>
+                                 <form method="post" asp-controller="Books" asp-action="Delete_Book">
+                                    <input type="hidden" name="Id" value=@book.Id>
+                                    <button class=" ml-[70px] bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="bg-500">
+        
+        <div class="mx-auto max-w-md float-right w-[500px] mr-[150px] mt-[70px]">
+            <h2 class="text-center text-2xl font-bold mb-4 text-gray-800">Оформление книги</h2>
+
+            <form method="post" asp-controller="Books" asp-action="Add_Book" class="bg-black shadow-md rounded px-8 pt-6 pb-8 mb-4 text-white">
+                <div class="mb-4">
+                    <label class="block text-sm font-bold mb-2">
+                        Название
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="Title" required>
+
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-bold mb-2">
+                        Автор
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="Author" required>
+
+                </div>
+                <div class="flex items-center justify-between">
+                    <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        Отправить
+                    </button>
+                    <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="reset">
+                        Сбросить
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div class="flex">
+</div>

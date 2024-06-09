@@ -1,0 +1,92 @@
+﻿@model (List<Books>, List<Users>, List<Taken>)
+
+@{
+    ViewData["Title"] = "Выдача книг";
+}
+
+<style>
+    .table-auto {
+        max-width: 600px;
+        overflow-y: scroll;
+        max-height: 530px;
+    }
+</style>
+
+<div class="grid grid-cols-2 h-screen">
+    <div class="p-8 bg-500">
+
+        <div class="table-auto">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Читатель</th>
+                        <th class="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Книга</th>
+                        <th class="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Дата возврата</th>
+                        <th class="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"><th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    @foreach(var take in Model.Item3){ 
+                        <tr>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">@take.Username</td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">@take.BookTitle</td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">@take.ReturnDate</td>
+                            <td>
+                                <form method="post" asp-controller="Home" asp-action="Delete_Take">
+                                    <input type="hidden" name="Id" value=@take.Id>
+                                    <button class=" ml-[70px] bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="bg-500">
+
+<div class="mx-auto max-w-md float-right w-[500px] mr-[100px] mt-[40px]">
+    <h2 class="text-center text-2xl font-bold mb-4 text-gray-800">Выдача книги</h2>
+
+    <form method="post" asp-controller="Home" asp-action="TakeBook" class="bg-black shadow-md rounded px-8 pt-6 pb-8 mb-4 text-white">
+        <div class="mb-4">
+            <label class="block text-sm font-bold mb-2">
+                Читатель
+            </label>
+            <select name="Username" class="text-gray-800 select select-bordered select-rounded w-full max-w-xs" required>
+                    @foreach (var user in Model.Item2)
+                    {
+                        <option value="@user.Name">@user.Name</option>
+                    }
+            </select>
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-bold mb-2">
+                Книга
+            </label>
+            <select name="BookTitle" class="text-gray-800 select select-bordered select-rounded w-full max-w-xs" required>
+                        @foreach (var book in Model.Item1)
+                {
+                    <option value="@book.Title">@book.Title</option>
+                }
+            </select>
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-bold mb-2">
+                Дата возврата:
+            </label>
+                    <input class="text-gray-800" type="date" name="ReturnDate" required>
+        </div>
+        <div class="flex items-center justify-between">
+            <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                Отправить
+            </button>
+            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="reset">
+                Сбросить
+            </button>
+        </div>
+    </form>
+</div>
+
